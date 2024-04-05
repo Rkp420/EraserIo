@@ -20,7 +20,7 @@ function Hero() {
           <h1 className="text-3xl text-sky-300 font-extrabold sm:text-5xl">
             Documents & diagrams
             <strong className="font-extrabold text-white sm:block">
-              for engineering teams.{" "}
+              for engineering teams.
             </strong>
           </h1>
 
