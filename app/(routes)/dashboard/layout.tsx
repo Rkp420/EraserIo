@@ -17,9 +17,7 @@ function DashboardLayout({
   const { user }: any = useKindeBrowserClient();
   const [fileList_, setFileList_] = useState();
   const router = useRouter();
-  useEffect(() => {
-    user && checkTeam();
-  }, [user]);
+  
 
   const checkTeam = async () => {
     const result = await convex.query(api.teams.getTeam, {
@@ -30,6 +28,10 @@ function DashboardLayout({
       router.push("teams/create");
     }
   };
+
+  useEffect(() => {
+    user && checkTeam();
+  }, [user, checkTeam]);
 
   return (
     <div>

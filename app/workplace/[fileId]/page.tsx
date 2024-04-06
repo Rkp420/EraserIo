@@ -16,12 +16,6 @@ function Workspace({ params }: any) {
   const [triggerSave, setTriggerSave] = useState(false);
   const convex = useConvex();
   const [fileData, setFileData] = useState<FILE | any>(null);
-  useEffect(() => {
-    console.log("FILEID", params.fileId);
-    params.fileId && getFileData();
-
-    return setFileData(null);
-  }, [params.fileId]);
 
   const getFileData = async () => {
     const result = await convex.query(api.files.getFileById, {
@@ -29,6 +23,14 @@ function Workspace({ params }: any) {
     });
     setFileData(result);
   };
+  
+  useEffect(() => {
+    console.log("FILEID", params.fileId);
+    params.fileId && getFileData();
+
+    return setFileData(null);
+  }, [params.fileId, getFileData]);
+
   return (
     <div>
       <WorksplaceHeader onSave={() => setTriggerSave(true)} />

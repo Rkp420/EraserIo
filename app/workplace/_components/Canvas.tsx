@@ -16,15 +16,17 @@ function Canvas({
   const [whiteBoardData, setWhiteBoardData] = useState<any>();
 
   const updateWhiteboard = useMutation(api.files.updateWhiteboard);
-  useEffect(() => {
-    onSaveTrigger && saveWhiteboard();
-  }, [onSaveTrigger]);
   const saveWhiteboard = () => {
     updateWhiteboard({
       _id: fileId,
       whiteboard: JSON.stringify(whiteBoardData),
     }).then((resp) => console.log(resp));
   };
+
+  useEffect(() => {
+    onSaveTrigger && saveWhiteboard();
+  }, [onSaveTrigger,saveWhiteboard]);
+
   return (
     <div style={{ height: "670px" }} className="m-3">
       {fileData && (

@@ -17,10 +17,7 @@ function SideNav() {
   const [totalFiles, setTotalFiles] = useState<Number>();
   const { fileList_, setFileList_ } = useContext(FileListContext);
 
-  useEffect(() => {
-    activeTeam && getFiles();
-  }, [activeTeam]);
-
+  
   const onFileCreate = (fileName: string) => {
     console.log(fileName);
     createFile({
@@ -51,6 +48,11 @@ function SideNav() {
     setFileList_(result);
     setTotalFiles(result?.length);
   };
+
+  useEffect(() => {
+    activeTeam && getFiles();
+  }, [activeTeam, getFiles]);
+
 
   return (
     <div

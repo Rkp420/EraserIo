@@ -14,11 +14,6 @@ export default function Dashboard() {
   const convex = useConvex();
 
   const createUser = useMutation(api.user.createUser);
-  useEffect(() => {
-    if (user) {
-      checkUser();
-    }
-  }, [user]);
 
   const checkUser = async () => {
     const result = await convex.query(api.user.getUser, { email: user?.email });
@@ -33,6 +28,12 @@ export default function Dashboard() {
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      checkUser();
+    }
+  }, [user, checkUser]);
+  
   return (
     <div className="p-8">
       <Header />

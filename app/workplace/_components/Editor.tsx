@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useMutation } from "convex/react";
 import { useParams } from "next/navigation";
 
@@ -88,10 +88,6 @@ function Editor({
     ref.current = editor;
   };
 
-  useEffect(() => {
-    fileData && initEditor();
-  }, [fileData, initEditor]);
-
   const onSaveDocument = () => {
     if (ref.current) {
       ref.current
@@ -118,10 +114,14 @@ function Editor({
     }
   };
 
-  useEffect(() => {
+  useCallback(() => {
+    fileData && initEditor();
+  }, [fileData, initEditor]);
+
+  useCallback(() => {
     console.log("triiger Value:", onSaveTrigger);
     onSaveTrigger && onSaveDocument();
-  }, [onSaveTrigger,onSaveDocument]);
+  }, [onSaveTrigger, onSaveDocument]);
 
   return <div id="editorjs" className="ml-10"></div>;
 }

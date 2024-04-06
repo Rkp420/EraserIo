@@ -38,13 +38,6 @@ function SideNavTopSection({ user, setActiveTeamInfo }: any) {
   const convex = useConvex();
   const [activeTeam, setActiveTeam] = useState<TEAM>();
   const [teamList, setTeamList] = useState<TEAM[]>();
-  useEffect(() => {
-    user && getTeamList();
-  }, [user]);
-
-  useEffect(() => {
-    activeTeam ? setActiveTeamInfo(activeTeam) : null;
-  }, [activeTeam]);
 
   const getTeamList = async () => {
     const result = await convex.query(api.teams.getTeam, {
@@ -60,6 +53,15 @@ function SideNavTopSection({ user, setActiveTeamInfo }: any) {
       router.push(item.path);
     }
   };
+
+  useEffect(() => {
+    user && getTeamList();
+  }, [user, getTeamList]);
+
+  useEffect(() => {
+    activeTeam ? setActiveTeamInfo(activeTeam) : null;
+  }, [activeTeam, setActiveTeamInfo]);
+
   return (
     <div>
       <Popover>
