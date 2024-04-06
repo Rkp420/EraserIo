@@ -9,6 +9,9 @@ import dynamic from "next/dynamic";
 const DynamicEditor = dynamic(() => import("../_components/Editor"), {
   ssr: false,
 });
+const DynamicCanvas = dynamic(() => import("../_components/Canvas"), {
+  ssr: false,
+});
 function Workspace({ params }: any) {
   const [triggerSave, setTriggerSave] = useState(false);
   const convex = useConvex();
@@ -46,7 +49,7 @@ function Workspace({ params }: any) {
         </div>
         {/* Whiteboard/canvas  */}
         <div className=" h-screen border-l">
-          <Canvas
+          <DynamicCanvas
             onSaveTrigger={triggerSave}
             fileId={params.fileId}
             fileData={fileData}
