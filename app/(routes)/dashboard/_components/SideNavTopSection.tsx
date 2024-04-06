@@ -1,17 +1,18 @@
-import { ChevronDown, LayoutGrid, LogOut, Settings, Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
+import { useRouter } from "next/navigation";
+import { useConvex } from "convex/react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
+import { ChevronDown, LayoutGrid, LogOut, Settings, Users } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { useConvex } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { api } from "@/convex/_generated/api";
 
 export interface TEAM {
   createdBy: String;
@@ -44,6 +45,7 @@ function SideNavTopSection({ user, setActiveTeamInfo }: any) {
   useEffect(() => {
     activeTeam ? setActiveTeamInfo(activeTeam) : null;
   }, [activeTeam]);
+
   const getTeamList = async () => {
     const result = await convex.query(api.teams.getTeam, {
       email: user?.email,

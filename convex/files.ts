@@ -57,9 +57,10 @@ export const updateWhiteboard = mutation({
 
 export const getFileById = query({
   args: {
-    _id: v.id("files"),
+    _id: v.id("files"), // Specifies that fileId should be a Convex-generated ID
   },
   handler: async (ctx, args) => {
+    // Retrieves a document by its fileId from the 'files' collection
     const result = await ctx.db.get(args._id);
     return result;
   },

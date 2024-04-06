@@ -1,5 +1,4 @@
 "use client";
-import AdBanner from "@/app/_components/Adbar";
 
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
@@ -37,13 +36,7 @@ export default function Dashboard() {
   return (
     <div className="p-8">
       <Header />
-
       <FileList />
-      <AdBanner
-        data-ad-slot="4796371341"
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      />
     </div>
   );
 }

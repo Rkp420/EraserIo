@@ -1,11 +1,12 @@
 "use client";
-import { api } from "@/convex/_generated/api";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { useEffect, useState } from "react";
 import { useConvex } from "convex/react";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import SideNav from "./_components/SideNav";
+
 import { FileListContext } from "@/app/_context/FileListContext";
+import SideNav from "./_components/SideNav";
+import { api } from "@/convex/_generated/api";
 
 function DashboardLayout({
   children,
