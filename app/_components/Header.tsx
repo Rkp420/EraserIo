@@ -1,17 +1,15 @@
-"use client";
+
 import {
   LoginLink,
   LogoutLink,
   RegisterLink,
-  useKindeBrowserClient,
 } from "@kinde-oss/kinde-auth-nextjs";
 import { MoveRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-function Header() {
-  const { user } = useKindeBrowserClient();
+function Header ({ user }: {user: any}) {
   return (
     <header className="bg-black">
       <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
