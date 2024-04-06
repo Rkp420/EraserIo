@@ -21,7 +21,7 @@ function Workspace({ params }: any) {
     params.fileId && getFileData();
 
     return setFileData(null);
-  }, []);
+  }, [params.fileId]);
 
   const getFileData = async () => {
     const result = await convex.query(api.files.getFileById, {

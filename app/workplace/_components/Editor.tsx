@@ -50,20 +50,11 @@ function Editor({
   onSaveTrigger: any;
   fileId: any;
   fileData: FILE;
-  updateTriggerSave: any
+  updateTriggerSave: any;
 }) {
   const params = useParams();
   const ref = useRef<EditorJS>();
   const updateDocument = useMutation(api.files.updateDocument);
-  // const [document, setDocument] = useState(rawDocument);
-  useEffect(() => {
-    fileData && initEditor();
-  }, [fileData]);
-
-  useEffect(() => {
-    console.log("triiger Value:", onSaveTrigger);
-    onSaveTrigger && onSaveDocument();
-  }, [onSaveTrigger]);
 
   const initEditor = () => {
     const editor = new EditorJS({
@@ -97,6 +88,10 @@ function Editor({
     ref.current = editor;
   };
 
+  useEffect(() => {
+    fileData && initEditor();
+  }, [fileData, initEditor]);
+
   const onSaveDocument = () => {
     if (ref.current) {
       ref.current
@@ -122,6 +117,11 @@ function Editor({
         });
     }
   };
+
+  useEffect(() => {
+    console.log("triiger Value:", onSaveTrigger);
+    onSaveTrigger && onSaveDocument();
+  }, [onSaveTrigger,onSaveDocument]);
 
   return <div id="editorjs" className="ml-10"></div>;
 }

@@ -12,7 +12,7 @@ import {
 
 import { Archive, Flag, Github } from "lucide-react";
 import PricingDialog from "./PricingDialog";
-import Constant from "@/app/_constant/Constant";
+import config from "@/app/_constant/Constant";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -61,7 +61,7 @@ function SideNavBottomSection({ onFileCreate, totalFiles }: any) {
             New File
           </Button>
         </DialogTrigger>
-        {totalFiles < Constant.MAX_FREE_FILE ? (
+        {totalFiles < config.MAX_FREE_FILE ? (
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Create New File</DialogTitle>
@@ -102,7 +102,7 @@ function SideNavBottomSection({ onFileCreate, totalFiles }: any) {
 
       <h2 className="text-[12px] mt-3">
         <strong>{totalFiles}</strong> out of
-        <strong>{Constant.MAX_FREE_FILE}</strong> files used
+        <strong>{config.MAX_FREE_FILE}</strong> files used
       </h2>
       <h2 className="text-[12px] mt-1">
         Upgrade your plan for unlimited access.
