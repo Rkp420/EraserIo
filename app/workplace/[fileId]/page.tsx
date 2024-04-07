@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useConvex } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Canvas from "../_components/Canvas";
@@ -17,12 +17,12 @@ function Workspace({ params }: any) {
   const convex = useConvex();
   const [fileData, setFileData] = useState<FILE | any>(null);
 
-  const getFileData = async () => {
+  const getFileData = useCallback((async () => {
     const result = await convex.query(api.files.getFileById, {
       _id: params.fileId,
     });
     setFileData(result);
-  };
+  }),[params.fileId,convex])
   
   useEffect(() => {
     console.log("FILEID", params.fileId);

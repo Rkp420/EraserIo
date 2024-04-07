@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 import { useRouter } from "next/navigation";
 import { useConvex } from "convex/react";
@@ -39,14 +39,14 @@ function SideNavTopSection({ user, setActiveTeamInfo }: any) {
   const [activeTeam, setActiveTeam] = useState<TEAM>();
   const [teamList, setTeamList] = useState<TEAM[]>();
 
-  const getTeamList = async () => {
+  const getTeamList = useCallback(async () => {
     const result = await convex.query(api.teams.getTeam, {
       email: user?.email,
     });
     console.log("TeamList", result);
     setTeamList(result);
     setActiveTeam(result[0]);
-  };
+  },[user,convex]);
 
   const onMenuClick = (item: any) => {
     if (item.path) {

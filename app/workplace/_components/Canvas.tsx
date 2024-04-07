@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useMutation } from "convex/react";
-import { Excalidraw} from "@excalidraw/excalidraw";
+import { Excalidraw } from "@excalidraw/excalidraw";
 
 import { api } from "@/convex/_generated/api";
 import { FILE } from "@/app/(routes)/dashboard/_components/FileList";
@@ -16,16 +16,16 @@ function Canvas({
   const [whiteBoardData, setWhiteBoardData] = useState<any>();
 
   const updateWhiteboard = useMutation(api.files.updateWhiteboard);
-  const saveWhiteboard = () => {
+  const saveWhiteboard = useCallback(() => {
     updateWhiteboard({
       _id: fileId,
       whiteboard: JSON.stringify(whiteBoardData),
     }).then((resp) => console.log(resp));
-  };
+  }, [fileId,updateWhiteboard,whiteBoardData]);
 
   useEffect(() => {
     onSaveTrigger && saveWhiteboard();
-  }, [onSaveTrigger,saveWhiteboard]);
+  }, [onSaveTrigger, saveWhiteboard]);
 
   return (
     <div style={{ height: "670px" }} className="m-3">
@@ -46,8 +46,7 @@ function Canvas({
               toggleTheme: false,
             },
           }}
-        >
-        </Excalidraw>
+        ></Excalidraw>
       )}
     </div>
   );

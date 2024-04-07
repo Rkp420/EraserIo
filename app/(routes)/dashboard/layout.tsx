@@ -1,6 +1,6 @@
 "use client";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useConvex } from "convex/react";
 import { useRouter } from "next/navigation";
 
@@ -17,9 +17,8 @@ function DashboardLayout({
   const { user }: any = useKindeBrowserClient();
   const [fileList_, setFileList_] = useState();
   const router = useRouter();
-  
 
-  const checkTeam = async () => {
+  const checkTeam = useCallback(async () => {
     const result = await convex.query(api.teams.getTeam, {
       email: user?.email,
     });
@@ -27,7 +26,7 @@ function DashboardLayout({
     if (!result?.length) {
       router.push("teams/create");
     }
-  };
+  }, [user,convex,router]);
 
   useEffect(() => {
     user && checkTeam();

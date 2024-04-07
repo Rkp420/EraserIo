@@ -52,11 +52,10 @@ function Editor({
   fileData: FILE;
   updateTriggerSave: any;
 }) {
-  const params = useParams();
   const ref = useRef<EditorJS>();
   const updateDocument = useMutation(api.files.updateDocument);
 
-  const initEditor = () => {
+  useEffect(() => {
     const editor = new EditorJS({
       tools: {
         header: {
@@ -81,14 +80,14 @@ function Editor({
         paragraph: Paragraph,
         warning: Warning,
       },
-
       data: fileData?.document ? JSON.parse(fileData.document) : rawDocument,
       holder: "editorjs",
     });
     ref.current = editor;
-  };
+    return () => editor.destroy(); // Clean up editor instance on component unmount
+  }, [fileData]);
 
-  const onSaveDocument = () => {
+  const onSaveDocument = useCallback(() => {
     if (ref.current) {
       ref.current
         .save()
@@ -97,30 +96,25 @@ function Editor({
           updateDocument({
             _id: fileId,
             document: JSON.stringify(outputData),
-          }).then(
-            (resp) => {
-              console.log("Hii");
+          })
+            .then(() => {
               updateTriggerSave();
               toast("Document Updated!");
-            },
-            (e) => {
+            })
+            .catch((e) => {
               toast("Server Error!");
-            }
-          );
+            });
         })
         .catch((error) => {
           console.log("Saving failed: ", error);
         });
     }
-  };
+  }, [fileId, updateDocument, updateTriggerSave]);
 
-  useCallback(() => {
-    fileData && initEditor();
-  }, [fileData, initEditor]);
-
-  useCallback(() => {
-    console.log("triiger Value:", onSaveTrigger);
-    onSaveTrigger && onSaveDocument();
+  useEffect(() => {
+    if (onSaveTrigger) {
+      onSaveDocument();
+    }
   }, [onSaveTrigger, onSaveDocument]);
 
   return <div id="editorjs" className="ml-10"></div>;

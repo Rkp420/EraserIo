@@ -1,10 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useConvex, useMutation } from "convex/react";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import FileList from "./_components/FileList";
 import Header from "./_components/Header";
 
@@ -15,7 +14,7 @@ export default function Dashboard() {
 
   const createUser = useMutation(api.user.createUser);
 
-  const checkUser = async () => {
+  const checkUser = useCallback(async () => {
     const result = await convex.query(api.user.getUser, { email: user?.email });
     if (!result?.length) {
       createUser({
@@ -26,14 +25,14 @@ export default function Dashboard() {
         console.log(resp);
       });
     }
-  };
+  }, [user,convex,createUser]);
 
   useEffect(() => {
     if (user) {
       checkUser();
     }
   }, [user, checkUser]);
-  
+
   return (
     <div className="p-8">
       <Header />

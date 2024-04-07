@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useConvex, useMutation } from "convex/react";
 
@@ -40,14 +40,13 @@ function SideNav() {
     );
   };
 
-  const getFiles = async () => {
+  const getFiles = useCallback(async () => {
     const result = await convex.query(api.files.getFiles, {
       teamId: activeTeam?._id,
     });
-    console.log(result);
     setFileList_(result);
     setTotalFiles(result?.length);
-  };
+  },[activeTeam?._id, convex, setFileList_]);
 
   useEffect(() => {
     activeTeam && getFiles();
