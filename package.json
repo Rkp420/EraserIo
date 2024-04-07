@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npx convex deploy && next build",
+    "build": "next build && npm run deploy",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "convex deploy"
   },
   "dependencies": {
     "@editorjs/checklist": "^1.6.0",
